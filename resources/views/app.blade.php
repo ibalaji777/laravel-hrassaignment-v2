@@ -21,6 +21,8 @@
                 </v-btn>
             </v-container>
         </v-app>
+route view
+<router-view></router-view>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
