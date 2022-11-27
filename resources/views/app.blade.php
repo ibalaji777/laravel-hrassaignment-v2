@@ -9,20 +9,8 @@
 <body>
     <div id="app">
         <v-app app>
-            <v-container>
-                <v-btn color="primary">
-                    Primary
-                </v-btn>
-                <v-btn color="secondary">
-                    Secondary
-                </v-btn>
-                <v-btn color="error">
-                    Error
-                </v-btn>
-            </v-container>
+            <router-view></router-view>
         </v-app>
-route view
-<router-view></router-view>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

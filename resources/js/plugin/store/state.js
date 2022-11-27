@@ -1,6 +1,8 @@
-
-
 const state={
+
+ dialog:{
+    createUser:false,
+    }
 
 }
 
