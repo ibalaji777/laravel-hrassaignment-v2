@@ -18,6 +18,7 @@
                 <v-text-field
                   label="Name*"
                   required
+                  v-model="user.name"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -27,19 +28,29 @@
                   label="Phone"
                   persistent-hint
                   required
+                  type="number"
+                v-model="user.phone"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
                   label="Email*"
                   required
+               v-model="user.email"
                 ></v-text-field>
+              </v-col>
+                            <v-col cols="12">
+                <v-select
+                :items="roles"
+               v-model="user.role"
+                ></v-select>
               </v-col>
               <v-col cols="12">
                 <v-text-field
                   label="Password*"
                   type="password"
                   required
+                v-model="user.password"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -58,7 +69,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="dialog = false"
+            @click="save"
           >
             Save
           </v-btn>
@@ -70,13 +81,58 @@
 </template>
 
 <script>
+
+function intialState(){
+    return {
+    roles:['STAFF','SUPERVISOR'],
+    user:{
+        name:'',
+        phone:'',
+        email:"",
+        password:'',
+        role:'STAFF'
+    }
+    }
+}
 export default {
 
+data(){
+    return intialState();
+},
 methods:{
 
-save(){
+async save(){
     var $vm=this;
+if($vm.user.name==""){
+$vm.$alert("Please Fill the Name")
+    return ;
+}
+if($vm.user.phone==""){
+$vm.$alert("Please Fill the Phone")
+    return ;
+}
+
+if($vm.user.email==""){
+$vm.$alert("Please Fill the Email")
+    return ;
+}
+
+if($vm.user.password==""){
+$vm.$alert("Please Fill the Password")
+    return ;
+}
+
+
+
+var result=await $vm.$store.dispatch("CREATE_USER",$vm.user);
+if(result.data.status)
+{
     $vm.$store.commit('setDialog',{key:'createUser',value:false})
+    $vm.user=intialState().user;
+}
+else{
+    $vm.$alert("Please Fill all the fields")
+}
 }
 
 }

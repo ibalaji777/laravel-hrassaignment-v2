@@ -1,16 +1,18 @@
 <template>
-    <div>
-
+    <div style="padding:10px">
+<h2 style="text-align:center">HR DASHBOARD</h2>
 <v-btn color="primary" @click="$store.commit('setDialog',{key:'createUser',value:true})">
-s    Create Employee
+Create Employee
 </v-btn>
+<!-- {{$store.state.db.employee}} -->
+<!-- {{$store.state}} -->
 
-{{$store.state}}
+<h2 style="text-align:center">EMPLOYEES</h2>
  <v-data-table
     dense
     :headers="employeeHeader"
-    :items="items"
-    item-key="name"
+    :items="$store.state.db.employee"
+    item-key="id"
     class="elevation-1"
   ></v-data-table>
 
@@ -27,7 +29,6 @@ data(){
 
 items:[{name:'adf'}],
  employeeHeader: [
-        { text: 'Emp ID ', value: 'empid' },
         { text: 'Name', value: 'name' },
         { text: 'Email', value: 'email' },
         { text: 'Phone', value: 'phone' },

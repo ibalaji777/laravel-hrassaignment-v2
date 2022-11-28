@@ -3,97 +3,137 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Modles\Employee;
+use App\Models\Employee;
+use App\Models\LeaveStatus;
 class MainController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+
+    public function CREATE_HR(Request $request)
     {
-        //
+        $sampleHR=[
+            'name' => 'hr',
+             'phone' => '8888888888',
+             'email' => 'hr',
+             'password' => 'hr',
+             'role'=>'HR'
+        ];
+
+         $emp=Employee::where("phone",$sampleHR['phone'])->where("email",$sampleHR['email']);
+         if(!$emp->exists())
+    {
+        $result=Employee::create($sampleHR);
+        $response=[
+            'status'=>true,
+             'msg'=>"Hr  Created",
+        ];
+        return  response($response,200);
+    }
+    $response=[
+        'status'=>false,
+        'msg'=>"Already Created",
+    ];
+    return  response($response,200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createEmployee(Request $request)
-    {
 
-        //if statement
+
+    public function CREATE_LEAVEFORM(Request $request)
+    {
         $validated = $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
-            'role' => 'required',
-            'password' => 'required',
+            'emp_id' => 'required',
+            'leave_from_date' => 'required',
+            'leave_to_date' => 'required',
+            'subject'=>'required',
+            'remarks'=>'required'
         ]);
 
-        $input = Request::all();
+        $input = $request->all();
+        $input->status='PENDING';
+        $result=LeaveStatus::create($input);
 
-        Employee::create($input);
+        $response=[
+            'status'=>true,
+            'msg'=>"Employee Created",
 
-        return $request.respon
+        ];
 
+        return  response($response,200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+
+
+    public function CREATE_USER(Request $request)
     {
-        //
+        $validated = $request->validate([
+           'name' => 'required',
+            'phone' => 'required|string|unique:employees,phone',
+            'email' => 'required|string|unique:employees,email',
+            'password' => 'r equired',
+            'role'=>'required'
+        ]);
+
+        $input = $request->all();
+        $result=Employee::create($input);
+
+        $response=[
+            'status'=>true,
+            'msg'=>"Employee Created",
+
+        ];
+
+        return  response($response,200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function GET_EMPLOYEE(Request $request)
     {
-        //
+        $result=Employee::all();
+
+        return  response($result,200);
+    }
+    public function GET_MY_LEAVEFORM(Request $request)
+    {
+        $id=$request->input('id');
+        $result=Employee::where('emp_id',id)->where('role','!=','HR')->all();
+
+        return  response($result,200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function GET_LEAVEFORM(Request $request)
     {
-        //
+        $id=$request->input('id');
+        $result=Employee::all();
+
+        return  response($result,200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function EMP_LOGIN(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+           ]);
+           $username=$request->input('username');
+           $password=$request->input('password');
+
+           $employee=Employee::where("phone",$username)->orWhere("email",$username)->where("password",$password);
+
+           if($employee->exists()){
+
+            return  response([
+                'status'=>true,
+                'msg'=>"Successfully Loggedin",
+                'data'=>$employee->first()
+
+            ],200);
+           }
+
+
+        return  response([
+            'status'=>false,
+            'msg'=>"Failed to Login",
+        ],200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

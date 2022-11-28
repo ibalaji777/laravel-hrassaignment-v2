@@ -1,9 +1,9 @@
 <template>
     <div class="roleContainer">
 
-        <div @click="$router.push({name:'login',params:{role:role.value}})"  v-for="(role,index) in roles" :key="'role'+index">
+        <v-card @click="$router.push({name:'login',params:{role:role.value}})"  v-for="(role,index) in roles" :key="'role'+index">
             <span> {{role.title}}</span>
-        </div>
+        </v-card>
     </div>
 </template>
 <script>
@@ -23,7 +23,7 @@ data(){
             },
                    {
                 title:'HR',
-                value:'hr'
+                value:'HR'
             }
         ]
     }

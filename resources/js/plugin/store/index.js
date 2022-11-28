@@ -9,9 +9,10 @@ Vue.use(Vuex)
 
 const vuexLocal = new VuexPersistence({
     storage: window.localStorage,
-    reducer:(state)=>{
-
-    }
+    key:'dd',
+    reducer:(state)=>({
+ logged:state.logged
+    })
 
   })
 

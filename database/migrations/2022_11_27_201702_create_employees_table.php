@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('role');
-            $table->string('password');
+            $table->string('name')->default('');;
+            $table->string('phone')->default('');;
+            $table->string('email')->default('');;
+            $table->string('role')->default('');;
+            $table->string('password')->default('');;
             $table->timestamps();
         });
     }
