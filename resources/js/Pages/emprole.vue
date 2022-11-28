@@ -1,9 +1,14 @@
 <template>
-    <div class="roleContainer">
+    <div class="colConainer">
 
+<div class="textTitle">
+    Leave Management
+</div>
+<div class="roleContainer">
         <v-card @click="$router.push({name:'login',params:{role:role.value}})"  v-for="(role,index) in roles" :key="'role'+index">
             <span> {{role.title}}</span>
         </v-card>
+ </div>
     </div>
 </template>
 <script>
@@ -32,12 +37,25 @@ data(){
 }
 </script>
 <style>
-.roleContainer{
+.textTitle{
+    text-align: center;
+    font-size: 45px;
+    font-weight: 600;
+}
+.colConainer{
     display: flex;
+    flex-direction: column;
     position: absolute;
-    top:50%;
+    top:45%;
     left:50%;
     transform: translate(-50%,-50%);
+
+}
+.roleContainer{
+   display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 70px;
 }
 .roleContainer > div{
     position: relative;
@@ -47,10 +65,10 @@ data(){
     cursor: pointer;
 }
 .roleContainer > div:nth-child(even){
-  background: #16522E;
+  /* background: #16522E; */
 }
 .roleContainer > div:nth-child(odd){
-  background: #40807F;
+  /* background: #40807F; */
 }
 
 .roleContainer > div > span{
@@ -58,7 +76,8 @@ data(){
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
-    color:white;
+    /* color:white; */
+    text-align: center;
     font-weight: 800;
 
 }

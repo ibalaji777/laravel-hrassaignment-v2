@@ -1,6 +1,6 @@
 <template>
     <div style="padding:10px">
-{{$store.state.dialog.createLeaveForm}}
+
 <v-btn color="primary" @click="$store.commit('setDialog',{key:'createLeaveForm',value:true})">
 APPLY LEAVE
 </v-btn>
@@ -9,7 +9,7 @@ APPLY LEAVE
  <v-data-table
     dense
     :headers="leaveFormHeader"
-    :items="$store.state.db.employee"
+    :items="$store.state.db.leaveForms"
     item-key="name"
     class="elevation-1"
   ></v-data-table>
@@ -24,12 +24,17 @@ export default {
 data(){
     return {
  leaveFormHeader: [
-        { text: 'FROM DATE', value: 'from_date' },
-        { text: 'TO DATE', value: 'to_date' },
+        { text: 'FROM DATE', value: 'leave_from_date' },
+        { text: 'TO DATE', value: 'leave_to_date' },
         { text: 'STATUS', value: 'status' },
+        { text: 'SUBJECT', value: 'subject' },
         { text: 'REMARKS', value: 'remarks' },
       ],
     }
+},
+mounted(){
+var $vm=this;
+    $vm.$store.dispatch('GET_LEAVEFORMS')
 }
 
 

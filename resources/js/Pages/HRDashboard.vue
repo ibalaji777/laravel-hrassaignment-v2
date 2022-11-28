@@ -25,24 +25,15 @@ export default {
 
 data(){
     return {
-
-
-items:[{name:'adf'}],
  employeeHeader: [
         { text: 'Name', value: 'name' },
         { text: 'Email', value: 'email' },
+        { text: 'Role', value: 'role' },
         { text: 'Phone', value: 'phone' },
         { text: 'Password', value: 'password' },
       ],
 
-//  headers: [
-//         { text: 'Emp ID ', value: 'empid' },
-//         { text: 'Name', value: 'name' },
-//         { text: 'Email', value: 'email' },
-//         { text: 'Phone', value: 'phone' },
-//         { text: 'action', value: 'actions' },
-//       ],
-    }
+   }
 }
 
 

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('leave_statuses', function (Blueprint $table) {
             $table->id();
-            $table->integer('emp_id');
-            $table->string('approver_id');
+            $table->integer('emp_id')->default(0);
+            $table->integer('approver_id')->default(0);
             $table->date('leave_from_date');
             $table->date('leave_to_date');
             $table->string('subject')->default('');

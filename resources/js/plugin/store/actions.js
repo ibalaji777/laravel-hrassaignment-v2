@@ -27,15 +27,25 @@ console.log("get employee",result)
 context.commit('SET_EMPLOYEE',result.data)
  return result;
  },
-async  GET_MY_LEAVEFORMS(context){
-var result=await axios.get(get_my_leaveforms);
-context.commit('SET_LEAVEFORM',result.data)
- return result;
- },
+// async  GET_MY_LEAVEFORMS(context){
+// var result=await axios.get(get_my_leaveforms);
+// context.commit('SET_LEAVEFORM',result.data)
+//  return result;
+//  },
  async  GET_LEAVEFORMS(context){
-    var result=await axios.get(get_leaveforms);
-    context.commit('SET_LEAVEFORM',result.data)
+    console.log(context)
+    if(context.state.logged.role!='HR'){
+        var emp_id=context.state.logged.id;
+        var result=await axios.post(get_my_leaveforms,{emp_id:emp_id});
+        context.commit('SET_LEAVEFORM',result.data)
      return result;
+    }
+else{
+
+    var result=await axios.get(get_leaveforms);
+        context.commit('SET_LEAVEFORM',result.data)
+         return result;
+        }
      }
      ,
 async  LOGIN(context,payload){

@@ -49,7 +49,8 @@ class MainController extends Controller
         ]);
 
         $input = $request->all();
-        $input->status='PENDING';
+        $input['status']='PENDING';
+
         $result=LeaveStatus::create($input);
 
         $response=[
@@ -94,16 +95,17 @@ class MainController extends Controller
     }
     public function GET_MY_LEAVEFORM(Request $request)
     {
-        $id=$request->input('id');
-        $result=Employee::where('emp_id',id)->where('role','!=','HR')->all();
+
+
+        $id=$request->input('emp_id');
+        $result=LeaveStatus::where('emp_id',$id)->get();
 
         return  response($result,200);
     }
 
     public function GET_LEAVEFORM(Request $request)
     {
-        $id=$request->input('id');
-        $result=Employee::all();
+        $result=LeaveStatus::where('role','!=','HR')->get();
 
         return  response($result,200);
     }

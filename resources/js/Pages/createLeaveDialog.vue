@@ -92,6 +92,9 @@
       </v-dialog>
 
        </v-row>
+
+       <v-text-field label="Subject" v-model="leaveform.subject"></v-text-field>
+
        <v-textarea label="remarks" v-model="leaveform.remarks"></v-textarea>
 
 
@@ -124,9 +127,8 @@
 
 <script>
 import moment from 'moment'
-export default {
+function intialState(){
 
-data(){
     return {
         modal_1: false,
          modal_2: false,
@@ -135,20 +137,30 @@ data(){
       leave_to_date:moment().format('YYYY-MM-DD'),
       date:moment().format('YYYY-MM-DD'),
       remarks:'',
+      subject:'',
         role:'STAFF'
     }
     }
+}
+
+export default {
+
+data(){
+    return intialState();
 },
 methods:{
 
-save(){
+async save(){
     var $vm=this;
     $vm.$store.commit('setDialog',{key:'createLeaveForm',value:false})
 
-$vm.$store.dispatch("CREATE_LEAVEFORM",$vm.leaveform)
+var emp_id=$vm.$store.state.logged.id;
+var result=await $vm.$store.dispatch("CREATE_LEAVEFORM",{emp_id,...$vm.leaveform})
 
+if(result.data.success){
+    this.leaveform=intialState().leaveform;
 }
-
+}
 }
 }
 </script>

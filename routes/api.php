@@ -27,7 +27,7 @@ Route::post('/create_leavform',[MainController::class,"CREATE_LEAVEFORM"]);
 
 Route::post('/create_user',[MainController::class,"CREATE_USER"]);
 Route::get('/get_employee',[MainController::class,"GET_EMPLOYEE"]);
-Route::get('/get_my_leaveform',[MainController::class,"GET_MY_LEAVEFORM"]);
+Route::post('/get_my_leaveform',[MainController::class,"GET_MY_LEAVEFORM"]);
 Route::get('/get_leaveform',[MainController::class,"GET_LEAVEFORM"]);
 
 Route::post('/emp_login',[MainController::class,"EMP_LOGIN"]);
