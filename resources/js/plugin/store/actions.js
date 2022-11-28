@@ -6,6 +6,7 @@ var get_employee=api+'get_employee';
 var get_my_leaveforms=api+'get_my_leaveform';
 var get_leaveforms=api+'get_leaveform';
 var emp_login=api+'emp_login'
+var apply_leave_status=api+'apply_leave_status'
 const actions={
 
 async  CREATE_USER(context,payload){
@@ -34,7 +35,7 @@ context.commit('SET_EMPLOYEE',result.data)
 //  },
  async  GET_LEAVEFORMS(context){
     console.log(context)
-    if(context.state.logged.role!='HR'){
+    if(context.state.logged.role!='SUPERVISOR'){
         var emp_id=context.state.logged.id;
         var result=await axios.post(get_my_leaveforms,{emp_id:emp_id});
         context.commit('SET_LEAVEFORM',result.data)
@@ -53,7 +54,17 @@ var result=await axios.post(emp_login,{...payload});
 if(result.data.status)
 context.commit('SET_LOGIN',result.data.data)
     return result;
-    }
+    },
+    async  APPLY_LEAVE_STATUS(context,action){
+        var id=context.state.selected_form.id;
+        var approver_id=context.state.logged.id;
+        var result=await axios.post(apply_leave_status,{id,action,approver_id});
+        actions.GET_LEAVEFORMS(context)
+        return result;
+            }
+
+
+
 
 
 }

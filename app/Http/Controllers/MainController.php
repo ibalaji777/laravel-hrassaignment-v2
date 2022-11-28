@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\LeaveStatus;
+use Illuminate\Support\Facades\DB;
+
 class MainController extends Controller
 {
 
@@ -98,14 +100,24 @@ class MainController extends Controller
 
 
         $id=$request->input('emp_id');
-        $result=LeaveStatus::where('emp_id',$id)->get();
+        $result = DB::table('leave_statuses As lv')
+            ->select('lv.*','e.name As employee_name','ap.name As approver_name')
+            ->where('emp_id',$id)
+            ->leftJoin('employees As e', 'lv.emp_id', '=', 'e.id')
+            ->leftJoin('employees As ap', 'lv.approver_id', '=', 'ap.id')
+            ->get();
 
         return  response($result,200);
     }
 
     public function GET_LEAVEFORM(Request $request)
     {
-        $result=LeaveStatus::where('role','!=','HR')->get();
+
+        $result = DB::table('leave_statuses As lv')
+            ->select('lv.*','e.name As employee_name','ap.name As approver_name')
+            ->leftJoin('employees As e', 'lv.emp_id', '=', 'e.id')
+            ->leftJoin('employees As ap', 'lv.approver_id', '=', 'ap.id')
+            ->get();
 
         return  response($result,200);
     }
@@ -137,5 +149,37 @@ class MainController extends Controller
             'msg'=>"Failed to Login",
         ],200);
     }
+
+
+    public function APPLY_LEAVE_STATUS(Request $request)
+    {
+
+        // return $request->all();
+
+           $id=$request->input('id');
+           $approver_id=$request->input('approver_id');
+           $action=$request->input('action');
+
+           $update = LeaveStatus::find($id);
+            $update->status =$action ;
+            $update->approver_id =$approver_id;
+
+            if($update->save()){
+
+            return  response([
+                'status'=>true,
+                'msg'=>"Successfully Updated",
+                'data'=>$update
+
+            ],200);
+           }
+
+
+        return  response([
+            'status'=>false,
+            'msg'=>"Failed to Update",
+        ],200);
+    }
+
 
 }

@@ -8,6 +8,7 @@
     </v-card>
 </template>
 <script>
+import _ from 'lodash'
 function initialState(){
     return {
 user:{
@@ -23,11 +24,12 @@ data(){
 methods:{
 async    login(){
 var $vm=this;
-var result=await $vm.$store.dispatch('LOGIN',$vm.user)
+
+var result=await $vm.$store.dispatch('LOGIN',_.cloneDeep($vm.user))
 
 if(result.data.status){
     $vm.$alert("Successfully Logged in");
-    $vm.user=initialState.user
+    $vm.user=initialState().user
 }
 
 if($vm.$store.state.logged.role=='STAFF')
@@ -35,7 +37,7 @@ if($vm.$store.state.logged.role=='STAFF')
 $vm.$router.push({name:'emp-dashboard'})
 }
 
-if($vm.$store.state.logged.role=='SUPPERVISOR')
+if($vm.$store.state.logged.role=='SUPERVISOR')
 {
 $vm.$router.push({name:'supervisor-dashboard'})
 }

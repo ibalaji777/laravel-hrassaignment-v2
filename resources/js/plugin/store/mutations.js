@@ -34,6 +34,10 @@ SET_LOGOUT(state,result){
     state.logged.email="";
     state.logged.password="";
     state.logged.role="";
+},
+setLeaveForm(state,payload){
+
+    state.selected_form=payload;
 }
 
 

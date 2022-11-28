@@ -9,6 +9,7 @@ Vue.use(VueSimpleAlert);
 Vue.component('mainApp', require('./Pages/app.vue').default);
 Vue.component('createUserDialog', require('./Pages/createUserDialog.vue').default);
 Vue.component('createLeaveDialog', require('./Pages/createLeaveDialog.vue').default);
+Vue.component('viewLeaveForm', require('./Pages/viewLeaveForm.vue').default);
 
 
 const app = new Vue({
