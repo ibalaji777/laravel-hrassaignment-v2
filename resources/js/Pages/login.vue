@@ -8,6 +8,8 @@
     </v-card>
 </template>
 <script>
+
+import axios from 'axios'
 import _ from 'lodash'
 function initialState(){
     return {
@@ -27,10 +29,15 @@ var $vm=this;
 
 var result=await $vm.$store.dispatch('LOGIN',_.cloneDeep($vm.user))
 
+axios.defaults.headers.common['username'] = $vm.$store.state.logged.email;
+axios.defaults.headers.common['password'] = $vm.$store.state.logged.password;
+
+
 if(result.data.status){
     $vm.$alert("Successfully Logged in");
     $vm.user=initialState().user
 }
+
 
 if($vm.$store.state.logged.role=='STAFF')
 {

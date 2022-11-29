@@ -22,7 +22,7 @@ const store = new Vuex.Store({
 state,
 actions,
 mutations,
-// plugins:[vuexLocal.plugin]
+plugins:[vuexLocal.plugin]
 })
 
 export default store;

@@ -20,12 +20,17 @@ v-if="!['emprole','login'].includes($route.name)"
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
 
 
 async mounted(){
     var $vm=this;
 await   $vm.$store.dispatch("GET_EMPLOYEE")
+
+axios.defaults.headers.common['username'] = $vm.$store.state.logged.email;
+axios.defaults.headers.common['password'] = $vm.$store.state.logged.password;
+
 
 },
 methods:{
