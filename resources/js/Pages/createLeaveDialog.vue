@@ -153,7 +153,16 @@ methods:{
 async save(){
     var $vm=this;
     $vm.$store.commit('setDialog',{key:'createLeaveForm',value:false})
+if($vm.leaveform.remarks==""){
+$vm.$alert("Please Fill Remarks")
+return ;
 
+}
+if($vm.leaveform.subject==""){
+$vm.$alert("Please Fill Subject")
+return ;
+
+}
 var emp_id=$vm.$store.state.logged.id;
 var result=await $vm.$store.dispatch("CREATE_LEAVEFORM",{emp_id,...$vm.leaveform})
 
